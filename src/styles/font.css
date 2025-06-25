@@ -1,0 +1,10 @@
+@font-face {
+  font-family: "firacode nerdfont mono";
+  src: url("/fonts/FiraCodeNerdFontMono-Regular.ttf");
+}
+
+@font-face {
+  font-family: "firacode nerdfont mono";
+  src: url("/fonts/FiraCodeNerdFontMono-Bold.ttf");
+  font-weight: bold;
+}

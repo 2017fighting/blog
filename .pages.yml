@@ -1,0 +1,42 @@
+media:
+  input: public/media
+  output: /media/
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: src/data/blog
+    view:
+      fields: [ title, date, updated, draft ]
+      sort: [ date, updated ]
+      layout: tree
+    fields:
+      - { name: author, label: 作者, type: string, default: RyanValor }
+      - { name: title, label: 标题, type: string, required: true }
+      - { name: subtitle, label: 副标题, type: string }
+      - { name: description, label: 描述, type: text }
+      - { name: date, label: 发布日期, type: date, options: { time: true, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" } }
+      - { name: updated, label: 更新日期, type: date, options: { time: true, format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" } }
+      - { name: featured, label: 是否精选, type: boolean, default: false }
+      - { name: draft, label: 是否草稿, type: boolean, default: true }
+      - { name: tags, label: 标签, type: string, list: true }
+      - { name: categories, label: 分类, type: string, list: true }
+      - { name: toc, label: 启用TOC, type: boolean, default: true }
+      - { name: comments, label: 启用评论, type: boolean, default: true }
+      - { name: math, label: 启用KaTeX, type: boolean, default: false }
+      - { name: slug, label: Slug, type: string, required: true }
+      - { name: body, label: Body, type: rich-text }
+  - name: about
+    label: About page
+    type: file
+    path: src/pages/about.md
+    fields:
+      - { name: layout, type: string, hidden: true, default: "../layouts/AboutLayout.astro" }
+      - { name: title, label: Title, type: string }
+      - { name: body, label: Body, type: rich-text, options: { input: public/assets, output: /assets } }
+  - name: version
+    label: Version
+    type: file
+    path: public/version
+    fields:
+      - { name: deployDate, label: 部署日期, type: date, options: { time: true } }

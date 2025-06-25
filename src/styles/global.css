@@ -1,0 +1,266 @@
+@import "tailwindcss";
+@import "./typography.css";
+@import "./beoe-mermaid.css";
+@import "./font.css";
+@import "./beoe-pan-zoom.css";
+@config "../../tailwind.config.js";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  --font-sans: "Noto Sans", "Noto Sans SC", sans-serif;
+  --font-mono:
+    "firacode nerdfont mono", "Noto Sans Mono", "Noto Sans SC", monospace;
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+
+  /* Wonton comment */
+  --wtc-primary-color: var(--color-accent);
+  --wtc-background-color: var(--color-background);
+  --wtc-text-color: var(--color-foreground);
+}
+
+:root,
+html[data-theme="light"] {
+  /* --background: #eff1f5;
+  --foreground: #4c4f69;
+  --accent: #8839ef;
+  --muted: #ccd0da;
+  --border: #9ca0b0; */
+  --strong-font-weight: 700; /* Compensating visual weight */
+
+  /* latte */
+  --rosewater: #dc8a78;
+  --flamingo: #dd7878;
+  --pink: #ea76cb;
+  --mauve: #8839ef;
+  --red: #d20f39;
+  --maroon: #e64553;
+  --peach: #fe640b;
+  --yellow: #df8e1d;
+  --green: #40a02b;
+  --teal: #179299;
+  --sky: #04a5e5;
+  --sapphire: #209fb5;
+  --blue: #1e66f5;
+  --lavender: #7287fd;
+  --text: #4c4f69;
+  --subtext1: #5c5f77;
+  --subtext0: #6c6f85;
+  --overlay2: #7c7f93;
+  --overlay1: #8c8fa1;
+  --overlay0: #9ca0b0;
+  --surface2: #acb0be;
+  --surface1: #bcc0cc;
+  --surface0: #ccd0da;
+  --base: #eff1f5;
+  --mantle: #e6e9ef;
+  --crust: #dce0e8;
+  --ins-background: #bfd8c1;
+  --del-background: #e9bdc0;
+  --accent: var(--pink);
+}
+
+html[data-theme="dark"] {
+  /* base */
+  /* --background: #1e1e2e; */
+  /* text */
+  /* --foreground: #cdd6f4; */
+  /* mauve */
+  /* --accent: #cba6f7; */
+  /* surface 0 */
+  /* --muted: #313244; */
+  /* overlay 0 */
+  /* --border: #6c7086; */
+  --strong-font-weight: 800; /* Compensating visual weight */
+
+  /* mocha */
+  --rosewater: #f5e0dc;
+  --flamingo: #f2cdcd;
+  --pink: #f5c2e7;
+  --mauve: #cba6f7;
+  --red: #f38ba8;
+  --maroon: #eba0ac;
+  --peach: #fab387;
+  --yellow: #f9e2af;
+  --green: #a6e3a1;
+  --teal: #94e2d5;
+  --sky: #89dceb;
+  --sapphire: #74c7ec;
+  --blue: #89b4fa;
+  --lavender: #b4befe;
+  --text: #cdd6f4;
+  --subtext1: #bac2de;
+  --subtext0: #a6adc8;
+  --overlay2: #9399b2;
+  --overlay1: #7f849c;
+  --overlay0: #6c7086;
+  --surface2: #585b70;
+  --surface1: #45475a;
+  --surface0: #313244;
+  --base: #1e1e2e;
+  --mantle: #181825;
+  --crust: #11111b;
+  --ins-background: #384543;
+  --del-background: #483343;
+  --accent: var(--blue);
+}
+
+@theme inline {
+  --color-background: var(--base);
+  --color-foreground: var(--subtext1);
+  --color-accent: var(--accent);
+  --color-muted: var(--surface0);
+  --color-border: var(--overlay0);
+
+  --color-rosewater: var(--rosewater);
+  --color-flamingo: var(--flamingo);
+  --color-pink: var(--pink);
+  --color-mauve: var(--mauve);
+  --color-red: var(--red);
+  --color-maroon: var(--maroon);
+  --color-peach: var(--peach);
+  --color-yellow: var(--yellow);
+  --color-green: var(--green);
+  --color-teal: var(--teal);
+  --color-sky: var(--sky);
+  --color-sapphire: var(--sapphire);
+  --color-blue: var(--blue);
+  --color-lavender: var(--lavender);
+  --color-text: var(--text);
+  --color-subtext1: var(--subtext1);
+  --color-subtext0: var(--subtext0);
+  --color-overlay2: var(--overlay2);
+  --color-overlay1: var(--overlay1);
+  --color-overlay0: var(--overlay0);
+  --color-surface2: var(--surface2);
+  --color-surface1: var(--surface1);
+  --color-surface0: var(--surface0);
+  --color-base: var(--base);
+  --color-mantle: var(--mantle);
+  --color-crust: var(--crust);
+  --color-inverted-text: var(--crust);
+  --color-selection: var(--mauve);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(
+        in srgb,
+        var(--color-muted) 80%,
+        var(--color-foreground) 20%
+      )
+      transparent;
+  }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background font-sans text-foreground selection:bg-selection/25;
+    font-family: var(--font-sans), var(--font-emoji);
+  }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  section,
+  footer {
+    @apply mx-auto max-w-2xl px-4 xl:max-w-3xl;
+  }
+}
+
+.active-nav {
+  @apply underline decoration-2 underline-offset-6;
+}
+
+@layer utilities {
+  #sidebar {
+    @apply fixed z-40 transform overflow-y-auto bg-background text-base;
+  }
+  #back-to-top {
+    @apply text-lg text-subtext0;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 1023px) {
+    #sidebar {
+      @apply fixed top-0 right-0 bottom-0 left-auto flex h-full max-h-none w-4/5 max-w-70 translate-x-full flex-col justify-end rounded-none p-6 pb-8;
+    }
+
+    #sidebar.mobile-open {
+      @apply translate-x-0;
+    }
+  }
+
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    #sidebar {
+      @apply top-48 right-10 m-2 max-h-[calc(100vh-12rem)] w-32 translate-x-0 rounded-none bg-transparent p-0 shadow-none;
+    }
+
+    /* xl breakpoint */
+    @media (min-width: 1357px) {
+      #sidebar {
+        @apply right-10 w-64;
+      }
+    }
+
+    /* 2xl breakpoint */
+    @media (min-width: 1879px) {
+      #sidebar {
+        @apply right-12 w-128;
+      }
+    }
+  }
+
+  /* tocbot */
+  .toc-list-item {
+    @apply truncate overflow-hidden whitespace-nowrap text-subtext0/80;
+  }
+  .toc-link.is-active-link {
+    @apply !text-accent;
+  }
+  .toc-link::before {
+    @apply !hidden;
+    content: "";
+  }
+
+  @media (max-width: 1023px) {
+    .toc-list-item {
+      @apply my-4;
+    }
+  }
+
+  /* rehype-autolink-headings */
+  .icon-link::before {
+    @apply ml-1 inline-block text-accent !no-underline opacity-0 transition-opacity duration-200;
+    content: "#";
+  }
+
+  h1:hover .icon-link::before,
+  h2:hover .icon-link::before,
+  h3:hover .icon-link::before,
+  h4:hover .icon-link::before,
+  h5:hover .icon-link::before,
+  h6:hover .icon-link::before {
+    @apply opacity-100;
+  }
+
+  /* Code blocks */
+  .expressive-code {
+    @apply mt-2 mb-4;
+  }
+}
+.tag-div {
+  border: 2px solid var(--surface0);
+  border-radius: 9999px;
+}
+
+.tag-div:hover {
+  border: 2px solid var(--accent);
+}

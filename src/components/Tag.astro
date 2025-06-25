@@ -1,0 +1,25 @@
+---
+export interface Props {
+  tag: string;
+  tagName: string;
+  count?: number;
+  size?: "sm" | "lg";
+}
+
+const { tag, tagName, count, size = "sm" } = Astro.props;
+---
+
+<li class={`inline-block ${size === "sm" ? "my-1 mr-1" : "my-3 mr-2"}`}>
+  <a
+    href={`/tags/${tag}`}
+    transition:name={tag}
+    class={`${size === "sm" ? "text-sm" : "text-lg"} group hover:text-accent relative opacity-80`}
+  >
+    <div class="tag-div rounded-full bg-foreground/10 px-3 py-0">
+      <span>
+        {tagName}
+      </span>
+      {count && <span class="font-bold text-accent italic">{count}</span>}
+    </div>
+  </a>
+</li>
